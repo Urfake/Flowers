@@ -1,47 +1,23 @@
+import classes.FlowersBasketsBouquetsFabric;
+
 import java.util.*;
+
+import static util.ApplicationUtils.*;
+import static util.PropertiesFilesUtils.savePropertiesStartupToFile;
 
 public class Main {
 
     public static void main(String[] args) {
-        WhiteRose whiteRose = new WhiteRose(60, 20, 120);
-        WhiteRose whiteRose1 = new WhiteRose(40, 40, 220);
-        WhiteRose whiteRose2 = new WhiteRose(10, 70, 320);
+        // загружаем автопараметры для запуска приложения в файл типа Properties
+        savePropertiesStartupToFile("load.properties");
 
-        List<WhiteRose> bouquet = new ArrayList<>();
+        // создадим фабрику объектов для работы приложения
+        FlowersBasketsBouquetsFabric myFabric = createMyFabric();
 
-        bouquet.add(whiteRose);
-        bouquet.add(whiteRose1);
-        bouquet.add(whiteRose2);
+        // демонстрация работы со списком объектов, содержащего корзины цветов
+        workBasketsByMyFabric(myFabric);
 
-        Collections.sort(bouquet, new Comparator<WhiteRose>() {
-            @Override
-            public int compare(WhiteRose o1, WhiteRose o2) {
-                return o1.getFreshness() - o2.getFreshness();
-            }
-        });
-        for (WhiteRose w:
-                bouquet
-             ) {
-            System.out.println(w.getFreshness());
-        }
-
-        Scanner in = new Scanner(System.in);
-        System.out.println("Введите первое число: ");
-        int a = in.nextInt();
-        System.out.println("Введите второе число: ");
-        int b = in.nextInt();
-        List<WhiteRose> array = new ArrayList<>();
-        for (WhiteRose w:
-                bouquet
-             ) {
-            int c = w.getStem_length();
-            if (c<b && c>a){
-                array.add(w);
-            }
-        }
-        for (WhiteRose w: array
-             ) {
-            System.out.println(w.getStem_length());
-        }
+        // демонстрация работы со списком объектов, содержащего букеты цветов
+        workBouquetsByMyFabric(myFabric);
     }
 }
